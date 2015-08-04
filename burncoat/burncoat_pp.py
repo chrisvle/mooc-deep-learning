@@ -46,4 +46,4 @@ for student in students:
 df_new = df_new.drop('student', 1)
 
 # index = False, header = False
-df_new.to_csv('burn_originals.csv', index = False, header = False)
+df_new.to_csv('burn_originals_with_headers.csv')

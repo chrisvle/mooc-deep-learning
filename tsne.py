@@ -153,7 +153,7 @@ def tsne(X = Math.array([]), no_dims = 2, initial_dims = 50, perplexity = 30.0):
 		# Compute current value of cost function
 		if (iter + 1) % 10 == 0:
 			C = Math.sum(P * Math.log(P / Q));
-			print "Iteration ", (iter + 1), ": error is ", C
+			# print "Iteration ", (iter + 1), ": error is ", C
 			
 		# Stop lying about P-values
 		if iter == 500:
@@ -162,20 +162,20 @@ def tsne(X = Math.array([]), no_dims = 2, initial_dims = 50, perplexity = 30.0):
 	# Return solution
 	return Y;
 		
-if __name__ == "__main__":
-	print "Run Y = tsne.tsne(X, no_dims, perplexity) to perform t-SNE on your dataset."
-	# print "Running example on 2,500 MNIST digits..."
-	X = Math.loadtxt("burn_originals.txt");
-	# labels = Math.loadtxt("other_data/mnist2500_labels.txt");
-	Y = tsne(X, 2, 50, 20.0);
-	kmeans = sklearn.cluster.KMeans()
-	kmeans.fit(Y)
-	# print(kmeans.get_params())
-	centers = kmeans.cluster_centers_
+# if __name__ == "__main__":
+# 	print "Run Y = tsne.tsne(X, no_dims, perplexity) to perform t-SNE on your dataset."
+# 	# print "Running example on 2,500 MNIST digits..."
+# 	X = Math.loadtxt("burn_originals.txt");
+# 	# labels = Math.loadtxt("other_data/mnist2500_labels.txt");
+# 	Y = tsne(X, 2, 50, 20.0);
+# 	kmeans = sklearn.cluster.KMeans()
+# 	kmeans.fit(Y)
+# 	# print(kmeans.get_params())
+# 	centers = kmeans.cluster_centers_
 
-	Plot.scatter(Y[:,0], Y[:,1], 100, [[0.65, 0.32, 0.5, 0.2]])
-	Plot.savefig('data.png');
+# 	Plot.scatter(Y[:,0], Y[:,1], 100, [[0.65, 0.32, 0.5, 0.2]])
+# 	Plot.savefig('data.png');
 
-	Plot.scatter(centers[:,0], centers[:,1], s = 1000, [[0.15, 0.62, 0.25, 0.12], [0.75, 0.82, 0.35, 0.42]])
-	Plot.savefig('centers.png');
+# 	Plot.scatter(centers[:,0], centers[:,1], 1000, [[0.15, 0.62, 0.25, 0.12], [0.75, 0.82, 0.35, 0.42]])
+# 	Plot.savefig('centers.png');
 
