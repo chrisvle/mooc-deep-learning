@@ -176,10 +176,11 @@ if __name__ == "__main__":
 	kmeans.fit(Y)
 	# print(kmeans.get_params())
 	centers = kmeans.cluster_centers_
-	Plot.scatter(Y[:,0], Y[:,1], 100, [[0.65, 0.32, 0.5, 0.2], [0.05, 0.9, 0.87, 0.54]])
+
+	Plot.scatter(Y[:,0], Y[:,1], 100, [[0.65, 0.32, 0.5, 0.2]])
 	Plot.savefig('output1.png');
 
 
-	Plot.scatter(centers[:,0], centers[:,1], 1000, [[0.65, 0.32, 0.5, 0.2], [0.05, 0.9, 0.87, 0.54]])
+	Plot.scatter(centers[:,0], centers[:,1], 1000, [[0.65, 0.32, 0.5, 0.2]])
 	Plot.savefig('output2.png');
 
