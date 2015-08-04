@@ -43,7 +43,7 @@ def x2p(X = Math.array([]), tol = 1e-5, perplexity = 30.0):
 	for i in range(n):
 	
 		# Print progress
-		if i % 2 == 0:
+		if i % 100 == 0:
 			print "Computing P-values for point ", i, " of ", n, "..."
 	
 		# Compute the Gaussian kernel and entropy for the current precision
@@ -143,7 +143,7 @@ def tsne(X = Math.array([]), no_dims = 2, initial_dims = 50, perplexity = 30.0):
 			dY[i,:] = Math.sum(Math.tile(PQ[:,i] * num[:,i], (no_dims, 1)).T * (Y[i,:] - Y), 0);
 			
 		# Perform the update
-		if iter < 50:
+		if iter < 500:
 			momentum = initial_momentum
 		else:
 			momentum = final_momentum
@@ -169,7 +169,7 @@ def tsne(X = Math.array([]), no_dims = 2, initial_dims = 50, perplexity = 30.0):
 if __name__ == "__main__":
 	print "Run Y = tsne.tsne(X, no_dims, perplexity) to perform t-SNE on your dataset."
 	# print "Running example on 2,500 MNIST digits..."
-	X = Math.loadtxt("burn_without_60.txt");
+	X = Math.loadtxt("burn_originals.txt");
 	# labels = Math.loadtxt("other_data/mnist2500_labels.txt");
 	Y = tsne(X, 2, 50, 20.0);
 	kmeans = sklearn.cluster.KMeans()
@@ -178,9 +178,9 @@ if __name__ == "__main__":
 	centers = kmeans.cluster_centers_
 
 	Plot.scatter(Y[:,0], Y[:,1], 100, [[0.65, 0.32, 0.5, 0.2]])
-	Plot.savefig('output1.png');
+	Plot.savefig('data.png');
 
 
-	Plot.scatter(centers[:,0], centers[:,1], 1000, [[0.65, 0.32, 0.5, 0.2]])
-	Plot.savefig('output2.png');
+	Plot.scatter(centers[:,0], centers[:,1], s = 1000, [[0.15, 0.62, 0.25, 0.12], [0.75, 0.82, 0.35, 0.42]])
+	Plot.savefig('centers.png');
 
