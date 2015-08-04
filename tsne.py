@@ -103,9 +103,6 @@ def tsne(X = Math.array([]), no_dims = 2, initial_dims = 50, perplexity = 30.0):
 	if X.dtype != "float64":
 		print "Error: array X should have type float64.";
 		return -1;
-	#if no_dims.__class__ != "<type 'int'>":			# doesn't work yet!
-	#	print "Error: number of dimensions should be an integer.";
-	#	return -1;
 	
 	# Initialize variables
 	X = pca(X, initial_dims);
@@ -165,7 +162,6 @@ def tsne(X = Math.array([]), no_dims = 2, initial_dims = 50, perplexity = 30.0):
 	# Return solution
 	return Y;
 		
-	
 if __name__ == "__main__":
 	print "Run Y = tsne.tsne(X, no_dims, perplexity) to perform t-SNE on your dataset."
 	# print "Running example on 2,500 MNIST digits..."
@@ -179,7 +175,6 @@ if __name__ == "__main__":
 
 	Plot.scatter(Y[:,0], Y[:,1], 100, [[0.65, 0.32, 0.5, 0.2]])
 	Plot.savefig('data.png');
-
 
 	Plot.scatter(centers[:,0], centers[:,1], s = 1000, [[0.15, 0.62, 0.25, 0.12], [0.75, 0.82, 0.35, 0.42]])
 	Plot.savefig('centers.png');
