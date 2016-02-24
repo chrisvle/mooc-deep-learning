@@ -1,0 +1,85 @@
+from keras.models import Sequential
+from keras.layers.core import Dense, Activation, Dropout
+from keras.layers.recurrent import LSTM
+import numpy as np
+import pandas as pd
+import random
+import sys
+import re
+'''
+   
+
+'''
+
+data = pd.read_csv('training_set_rel3.tsv', sep='\t')
+
+essay_set_1 = data[data.essay_set == 1]
+good_essay_set_1 = essay_set_1[essay_set_1.domain1_score >= 10]
+essays = good_essay_set_1.essay
+
+ending_punctuation = [',', '.', ':', ';']
+splitting_punctuation = ['/', '\\']
+kaggle_anonymization_terms = ['PERSON', 'ORGANIZATION', 'LOCATION', 'DATE', 'TIME', 'MONEY', 'PERCENT', 'MONTH', 'EMAIL', 'NUM', 'CAPS', 'DR', 'CITY', 'STATE'] 
+
+def convert_essays(essays):
+  """
+  Splits essays as strings into lists of individual words. Takes apart punctuation, and re-words kaggle anonymization terms.
+  Takes in sequence of essays as strings and 
+  returns a list of lists whose elements are split words
+  """
+  converted_essays = []
+  for essay in essays:
+    final_essay = re.findall(r"[\w'@]+|[/.,!?;\"]", essay)
+    for i in range(len(final_essay)):
+      current_word = final_essay[i]
+      if current_word[0] == "@":
+        for term in kaggle_anonymization_terms:
+          if term in current_word:
+            current_word = "kaggleanon"+ current_word[1:]
+            current_word = ''.join(i for i in current_word if not i.isdigit())
+            final_essay[i] = current_word
+    final_essay = [word.lower() for word in final_essay]
+    converted_essays.append(final_essay)
+  """
+  for essay in essays:
+    first_split = essay.split() #splits on spaces
+    final_essay = []
+    for word in first_split:
+      found_anon = False
+      found_split = False
+      word = word.lower()
+      add_ending_punctuation = False
+      first_char = word[0]
+      last_char = word[-1]
+      if last_char in ending_punctuation:
+        add_ending_punctuation = True
+        word = word[:-1]
+      if first_char == "@":
+        print(word)
+        for term in kaggle_anonymization_terms:
+          term = term.lower()
+          if term in word:
+            final_essay.append("kaggleanon" + term)
+            found_anon = True
+            break
+        if not found_anon:
+          final_essay.append(word)
+      else:
+        for splitter in splitting_punctuation:
+          if splitter in word:
+            found_split = True
+            split_words = word.split(splitter) #currently assumes at most one splitter type will be found in a word
+            for i in range(len(split_words)):
+              final_essay.append(split_words[i])
+              if i != len(split_words) - 1:
+                final_essay.append(splitter)
+      if not found_split and not found_anon:
+        final_essay.append(word)
+      if add_ending_punctuation:
+        final_essay.append(last_char)
+    final_essay.append("endofessay")
+    converted_essays.append(final_essay)
+    """
+  return converted_essays
+
+converted_essays = convert_essays(essays)
